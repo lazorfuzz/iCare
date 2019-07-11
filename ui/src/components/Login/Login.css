@@ -1,0 +1,14 @@
+.loginInput {
+  width: 400px;
+  max-width: 90%;
+  padding-left: 8px;
+}
+
+.item {
+  width: 56%;
+  overflow: visible;
+  stroke: #fff;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}

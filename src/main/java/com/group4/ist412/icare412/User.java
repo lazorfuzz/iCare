@@ -6,18 +6,12 @@
 package com.group4.ist412.icare412;
 
 import java.io.Serializable;
-import org.dizitart.no2.IndexType;
-import org.dizitart.no2.objects.Index;
-import org.dizitart.no2.objects.Indices;
 
 /**
  *
  * @author leon
  */
 
-@Indices({
-        @Index(value = "email", type = IndexType.Unique)
-})
 public class User implements Serializable {
     private String firstName;
     private String lastName;

@@ -13,11 +13,14 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import com.group4.ist412.icare412.HTTPServer.*;
-import org.dizitart.no2.objects.Cursor;
+import org.dizitart.no2.Document;
+import org.dizitart.no2.Nitrite;
+import org.dizitart.no2.NitriteCollection;
+import org.dizitart.no2.mapper.JacksonFacade;
+import org.dizitart.no2.mapper.MapperFacade;
+import com.google.gson.Gson;
 import static org.dizitart.no2.IndexOptions.indexOptions;
 import org.dizitart.no2.IndexType;
-import org.dizitart.no2.Nitrite;
-import org.dizitart.no2.objects.ObjectRepository;
 
 /**
  *
@@ -41,7 +44,7 @@ public class MainApp extends Application {
         server.start();
         System.out.println("Creating scene");
         stage.setTitle("iCare");
-        scene = new Scene(new Browser(db), 960, 600, Color.web("#666970"));
+        scene = new Scene(new Browser(this.db), 960, 600, Color.web("#666970"));
         stage.setScene(scene);  
         System.out.println("Showing stage");
         stage.show();
@@ -52,13 +55,22 @@ public class MainApp extends Application {
         .compressed()
         .filePath("icare.db")
         .openOrCreate();
-        
-        ObjectRepository<User> userRepo = db.getRepository(User.class);
-        Cursor<User> cursor = userRepo.find();
-        if (cursor.totalCount() == 0) {
-            userRepo.insert(new User("Leon", "Li", "test", "leon@email.net", "doctor"));
-            userRepo.insert(new User("Student", "Jackson", "ist412", "student@psu.edu", "patient"));
-            db.commit();
+        Gson gson = new Gson();
+        User u1 = new User("Leon", "Li", "test", "leon@email.net", "doctor");
+        User u2 = new User("Student", "Jackson", "ist412", "student@psu.edu", "patient");
+        try(NitriteCollection collection = db.getCollection("users")) {
+            if (!collection.hasIndex("email")) {
+                collection.createIndex("email", indexOptions(IndexType.Unique, true));
+            }
+            MapperFacade fac = new JacksonFacade();
+            Document doc = fac.parse(gson.toJson(u1));
+            Document doc2 = fac.parse(gson.toJson(u2));
+            collection.insert(doc);
+            collection.insert(doc2);
+            this.db.commit();
+        }
+        catch (Exception e) {
+            System.out.println(e);
         }
     }
 
