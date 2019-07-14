@@ -45,7 +45,7 @@ class Browser extends Region {
         // cd ui
         // yarn start
         // Set the port here to 3000
-        webEngine.load("http://localhost:49555");
+        webEngine.load("http://localhost:3000");
         getChildren().add(browser);
  
     }

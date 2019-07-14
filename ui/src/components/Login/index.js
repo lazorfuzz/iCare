@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import { withStyles } from '@material-ui/core/styles';
 import { motion } from "framer-motion";
 import { BaseInput, InputContainer } from '../Input';
+import Text, { Title } from '../Text';
 import './Login.css';
 
 class Login extends Component {
@@ -64,10 +65,11 @@ class Login extends Component {
                 />
               </motion.svg>
             </LogoContainer>
+            <SplashTitle>iCare</SplashTitle>
           </motion.div>
         }
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
             ease: 'easeOut',
@@ -144,6 +146,14 @@ const LogoContainer = styled.div`
   overflow: hidden;
   background: rgba(33,150,243,.8);
   border-radius: 30px;
+`;
+
+const SplashTitle = styled.h3`
+  text-align: center;
+  color: white;
+  font-weight: 300;
+  font-size: 24px;
+  margin: .5em 0;
 `;
 
 const LoginContainer = styled.div`
