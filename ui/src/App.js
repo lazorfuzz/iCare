@@ -13,7 +13,7 @@ class App extends Component {
       path: 'login',
       showSnack: false,
       snackData: { message: 'Login failed.', type: 'error' },
-      user: { username: 'student', role: 'doctor' }
+      user: { firstName: 'Student', lastName: 'Jackson', email: 'student@psu.edu', role: 'patient' }
     };
   }
 
@@ -45,7 +45,7 @@ class App extends Component {
           }
           {
             path === 'home' &&
-            <Home user={user} />
+            <Home user={user} onNotification={this.handleShowSnack} />
           }
         </Wrapper>
         <Snackbar

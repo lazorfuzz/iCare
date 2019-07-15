@@ -26,18 +26,21 @@ class Browser extends Region {
     final WebView browser = new WebView();
     final WebEngine webEngine = browser.getEngine();
     LoginController loginController = new LoginController();
+    PatientController patientController = new PatientController();
      
     public Browser(Nitrite db) {
         getStyleClass().add("browser");
         loginController.setDb(db);
+        patientController.setDb(db);
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {
                 @Override
                 public void changed(ObservableValue observable, Object oldValue, Object newValue) {
                     if (newValue != Worker.State.SUCCEEDED) { return; }
                     JSObject window = (JSObject) webEngine.executeScript("window");
-                    // Let our React app access the LoginController instance
+                    // Let our React app access the controllers
                     window.setMember("LoginController", loginController);
+                    window.setMember("PatientController", patientController);
                 }
             }
         );
@@ -45,7 +48,7 @@ class Browser extends Region {
         // cd ui
         // yarn start
         // Set the port here to 3000
-        webEngine.load("http://localhost:3000");
+        webEngine.load("http://localhost:49555");
         getChildren().add(browser);
  
     }

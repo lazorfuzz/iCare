@@ -6,12 +6,12 @@
 package com.group4.ist412.icare412;
 
 import com.google.gson.Gson;
-import java.util.List;
 import org.dizitart.no2.Document;
 import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.NitriteCollection;
-import org.dizitart.no2.Cursor;
 import static org.dizitart.no2.filters.Filters.eq;
+import org.dizitart.no2.mapper.JacksonFacade;
+import org.dizitart.no2.mapper.MapperFacade;
 
 /**
  *
@@ -20,7 +20,6 @@ import static org.dizitart.no2.filters.Filters.eq;
 public class PatientController {
     Gson gson;
     Nitrite db;
-    Cursor cursor;
     
     public PatientController() {
         gson = new Gson();
@@ -30,24 +29,31 @@ public class PatientController {
         try (NitriteCollection collection = db.getCollection("vitals")) {
             Document d = collection.find(eq("email", email)).firstOrDefault();
             String v = gson.toJson(d);
-            
             //Vitals vitals = gson.fromJson(v, Vitals.class);
-
             return v;
         }
-    }
-
-    public String getUserByEmail(String email) {
-        try (NitriteCollection collection = db.getCollection("users")) {
-            Document d = collection.find(eq("email", email)).firstOrDefault();
-            return gson.toJson(d);
+        catch (Exception e) {
+            Logger.log(e.toString());
+            return "";
         }
     }
     
-    public String getUsers() {
-        try (NitriteCollection collection = db.getCollection("users")) {
-            List<Document> list = collection.find().toList();
-            return gson.toJson(list);
+    public Boolean setUserVitals(String vitals) {
+        try (NitriteCollection collection = db.getCollection("vitals")) {
+            Vitals v = gson.fromJson(vitals, Vitals.class);
+            Document d = collection.find(eq("email", v.getEmail())).firstOrDefault();
+            if (d != null) {
+                collection.remove(d);
+            }
+            MapperFacade fac = new JacksonFacade();
+            Document doc = fac.parse(vitals);
+            collection.insert(doc);
+            this.db.commit();
+            return true;
+        }
+        catch (Exception e) {
+            Logger.log(e.toString());
+            return false;
         }
     }
     

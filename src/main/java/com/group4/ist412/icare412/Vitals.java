@@ -17,6 +17,7 @@ public class Vitals {
     private String email;
     /**
      * This is the constructor for the vitals class
+     * @param email The patient's email
      * @param bodyTempF The patient's body temperature in Fahrenheit.
      * @param weightLB The patient's weight in pounds.
      * @param heightFT The patient's height in feet.
@@ -27,8 +28,7 @@ public class Vitals {
      */
     public Vitals(String email, double bodyTempF,double weightLB, double heightFT, double bpSystolic, double bpDiastolic, double respRate, double pulseBPM) {
         
-        this.email=email;
-        
+        this.email = email;
         this.bodyTempF = bodyTempF;
         this.weightLB = weightLB;
         this.heightFT = heightFT;
@@ -103,33 +103,26 @@ public class Vitals {
     public void setPulseBPM(double pulseBPM) {
         this.pulseBPM = pulseBPM;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    
     
     /**
      * Calculates BMI
-     */
+     
     public double calculateBMI(double heightFT, double weightLB){//added by WS
         int heightIN = (int) (heightFT * 12);//added by WS
         this.bmi = (weightLB/(Math.pow(heightIN, 2)))*703;//added by WS
         return this.bmi;//added by WS
-    }  
-    /**
-     * Gets all patient vitals.
-     * @return A HashMap containing patient data.
-     */
-    public HashMap getAllVitals() {
-        HashMap<String, String> vitals = new HashMap<>();
-        vitals.put("email", this.email);
-        vitals.put("BMI", ""+this.bmi);
-        vitals.put("Body Temperature", ""+this.bodyTempF);
-        vitals.put("Weight", ""+this.weightLB);
-        vitals.put("Height", ""+this.heightFT);
-        vitals.put("Systolic", ""+this.bpSystolic); //added by WS
-        vitals.put("Diastolic", ""+this.bpDiastolic);//added by WS
-        vitals.put("Respiration", ""+this.respRate);//added by WS
-        vitals.put("Pulse", ""+this.pulseBPM);//added by WS
-        
-        return vitals;
     }
+    * 
+    * */
     
    
 }

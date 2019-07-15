@@ -70,6 +70,7 @@ public class MainApp extends Application {
             this.db.commit();
         }
         catch (Exception e) {
+            Logger.log("DB initialized.");
             System.out.println(e);
         }
     }

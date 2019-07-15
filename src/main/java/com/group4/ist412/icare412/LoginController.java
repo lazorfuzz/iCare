@@ -32,7 +32,7 @@ public class LoginController {
             return d.get("password").equals(password);
         }
         catch(Exception e) {
-            System.out.println(e);
+            Logger.log(e.toString());
             return false;
         }
     }
