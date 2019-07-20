@@ -113,16 +113,13 @@ public class Vitals {
     }
     
     
-    /**
-     * Calculates BMI
-     
+
     public double calculateBMI(double heightFT, double weightLB){//added by WS
         int heightIN = (int) (heightFT * 12);//added by WS
         this.bmi = (weightLB/(Math.pow(heightIN, 2)))*703;//added by WS
         return this.bmi;//added by WS
     }
-    * 
-    * */
+
     
    
 }

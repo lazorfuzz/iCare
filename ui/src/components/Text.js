@@ -5,6 +5,7 @@ const Title = styled.h3`
   font-weight: 300;
   font-size: 24px;
   margin: 4px 0;
+  color: white;
 `;
 
 const Text = styled.p`

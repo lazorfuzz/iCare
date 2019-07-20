@@ -10,12 +10,14 @@ import MedicationsIcon from '@material-ui/icons/ListAlt';
 import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import Vitals from '../Vitals';
+import Reports from '../Reports';
+
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: '#vitals',
+      page: '#reports',
     };
   }
 
@@ -87,6 +89,9 @@ class Home extends Component {
         <PageContainer>
           {
             page === '#vitals' && <Vitals user={this.props.user} onNotification={this.props.onNotification} />
+          }
+          {
+            page === '#reports' && <Reports user={this.props.user} onNotification={this.props.onNotification} />
           }
         </PageContainer>
       </Wrapper>

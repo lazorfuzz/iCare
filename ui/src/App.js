@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      path: 'login',
+      path: 'home',
       showSnack: false,
       snackData: { message: 'Login failed.', type: 'error' },
       user: { firstName: 'Student', lastName: 'Jackson', email: 'student@psu.edu', role: 'patient' }

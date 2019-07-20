@@ -41,7 +41,11 @@ public class PatientController {
     public Boolean setUserVitals(String vitals) {
         try (NitriteCollection collection = db.getCollection("vitals")) {
             Vitals v = gson.fromJson(vitals, Vitals.class);
+            System.out.println("BMI: "+v.calculateBMI(5.9, 150));
+            String jsonv = gson.toJson(v);
+            System.out.println("Set User Vitals:\n "+jsonv);
             Document d = collection.find(eq("email", v.getEmail())).firstOrDefault();
+            
             if (d != null) {
                 collection.remove(d);
             }
