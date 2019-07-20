@@ -45,6 +45,7 @@ class Vitals extends Component {
           <TextField
             label="Weight"
             helperText="(pounds)"
+            required
             classes={{ root: classes.vitalsInput }}
             inputProps={{ type: 'number' }}
             value={weight}

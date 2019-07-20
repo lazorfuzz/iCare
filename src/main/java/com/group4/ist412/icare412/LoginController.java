@@ -31,7 +31,26 @@ public class LoginController {
             Document d = collection.find(eq("email", email)).firstOrDefault();
             return d.get("password").equals(password);
         }
-        catch(Exception e) {
+        catch (Exception e) {
+            Logger.log(e.toString());
+            return false;
+        }
+    }
+    
+    public Boolean createUser(String user) {
+        try (NitriteCollection collection = db.getCollection("users")) {
+            Document doc = gson.fromJson(user, Document.class);
+            String email = doc.get("email", String.class);
+            Document existing = collection.find(eq("email", email)).firstOrDefault();
+            if (existing != null || doc.get("username",String.class).length() < 2 || doc.get("password",String.class).length() < 8) {
+            } else {
+                return false;
+            }
+            collection.insert(doc);
+            db.commit();
+            return true;
+        }
+        catch (Exception e) {
             Logger.log(e.toString());
             return false;
         }

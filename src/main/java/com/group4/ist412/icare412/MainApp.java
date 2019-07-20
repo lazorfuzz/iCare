@@ -58,7 +58,7 @@ public class MainApp extends Application {
         Gson gson = new Gson();
         User u1 = new User("Leon", "Li", "test", "leon@email.net", "doctor");
         User u2 = new User("Student", "Jackson", "ist412", "student@psu.edu", "patient");
-        try(NitriteCollection collection = db.getCollection("users")) {
+        try (NitriteCollection collection = db.getCollection("users")) {
             if (!collection.hasIndex("email")) {
                 collection.createIndex("email", indexOptions(IndexType.Unique, true));
             }

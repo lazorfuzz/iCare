@@ -28,23 +28,22 @@ public final class Logger {
 	private static File logFile;
 
 	public static Logger getInstance(){
-		return instance;
+            return instance;
 	}
 
 	public static Logger getInstance(String withName){
-		instance.logname = withName;
-		instance.createLogFile();
-		return instance;
+            instance.logname = withName;
+            instance.createLogFile();
+            return instance;
 	}
 
 	public void createLogFile(){
 		//Determine if a logs directory exists or not.
 		File logsFolder = new File(env + '/' + "logs");
 		if(!logsFolder.exists()){
-			//Create the directory 
-			System.out.println("INFO: Creating new logs directory in " + env);
-			logsFolder.mkdir();
-			
+                    //Create the directory 
+                    System.out.println("INFO: Creating new logs directory in " + env);
+                    logsFolder.mkdir();
 		}
 
 		//Get the current date and time
@@ -54,37 +53,39 @@ public final class Logger {
 	   	//Create the name of the file from the path and current time
 		logname =  logname + '-' +  dateFormat.format(cal.getTime()) + ".log";
 		Logger.logFile = new File(logsFolder.getName(),logname);
-		try{
-			if(logFile.createNewFile()){
-				//New file made
-				System.err.println("INFO: Creating new log file");	
-			}
-		}catch(IOException e){
-			System.err.println("ERROR: Cannot create log file");
-			System.exit(1);
+                
+		try {
+                    if(logFile.createNewFile()){
+                        //New file made
+                        System.err.println("INFO: Creating new log file");	
+                    }
+		} catch (IOException e){
+                    System.err.println("ERROR: Cannot create log file");
+                    System.exit(1);
 		}
 	}
 
 	private Logger(){
-		if (instance != null){
-			//Prevent Reflection
-			throw new IllegalStateException("Cannot instantiate a new singleton instance of log");
-		}
-		this.createLogFile();
+            if (instance != null){
+            //Prevent Reflection
+            throw new IllegalStateException("Cannot instantiate a new singleton instance of log");
+            }
+            this.createLogFile();
 	}
 
 	public static void log(String message){
-		try (FileWriter out = new FileWriter(Logger.logFile, true)) {
-                        message = message + "\n";
-			out.write(message.toCharArray());
-		} catch(IOException e){
-			System.err.println("ERROR: Could not write to log file");
-		}
+            try (FileWriter out = new FileWriter(Logger.logFile, true)) {
+                DateFormat dateFormat = new SimpleDateFormat("HH:mm");
+                Calendar cal = Calendar.getInstance();
+                message = dateFormat.format(cal.getTime()) + " - " + message + "\n";
+                out.write(message.toCharArray());
+            } catch(IOException e){
+                System.err.println("ERROR: Could not write to log file");
+            }
 	}
 
 	public static void main(String[] args) {
-		
-		Logger.log("iCare logger initiated.");
+            Logger.log("iCare logger initiated.");
 	}
 
 }
