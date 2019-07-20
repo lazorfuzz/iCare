@@ -37,6 +37,7 @@ public class LoginController {
         }
     }
     
+    // {"username": "adam", ...}
     public Boolean createUser(String user) {
         try (NitriteCollection collection = db.getCollection("users")) {
             Document doc = gson.fromJson(user, Document.class);
@@ -49,6 +50,39 @@ public class LoginController {
             collection.insert(doc);
             db.commit();
             return true;
+        }
+        catch (Exception e) {
+            Logger.log(e.toString());
+            return false;
+        }
+    }
+
+    public Boolean deleteUser(String email) {
+        try (NitriteCollection collection = db.getCollection("users")) {
+            Document doc = collection.find(eq("email", email)).firstOrDefault();
+            if (doc != null) {
+                collection.remove(doc);
+                db.commit();
+                return true;
+            }
+            return false;
+        }
+        catch (Exception e) {
+            Logger.log(e.toString());
+            return false;
+        }
+    }
+
+    public Boolean updateUser(String user) {
+        try (NitriteCollection collection = db.getCollection("users")) {
+            Document newUserDoc = gson.fromJson(user, Document.class);
+            Document doc = collection.find(eq("email", newUserDoc.get("email", String.class))).firstOrDefault();
+            if (doc != null) {
+                collection.update(eq("email", newUserDoc.get("email", String.class)), newUserDoc);
+                db.commit();
+                return true;
+            }
+            return false;
         }
         catch (Exception e) {
             Logger.log(e.toString());
