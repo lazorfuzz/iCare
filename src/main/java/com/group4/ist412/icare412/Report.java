@@ -24,6 +24,16 @@ public class Report {
      * Generates a report.
      * 
      * @param userId The patient's ID.
+     * @param bodyTempF Body Temp in Fahrenheit
+     * @param weightLB Weight in pounds
+     * @param heightFT Height in feet
+     * @param bmi  Body Mass Index
+     * @param bpSystolic  Blood Pressure Systolic
+     * @param bpDiastolic Blood Pressure Diastolic
+     * @param respRate Respiration Rate
+     * @param pulseBPM Pule Beats per Minute
+     * 
+     * @return String
      */
     public String generateReport(String userId, double bodyTempF,double weightLB, double heightFT, double bmi, double bpSystolic, double bpDiastolic, double respRate, double pulseBPM){
         

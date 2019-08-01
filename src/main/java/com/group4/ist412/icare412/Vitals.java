@@ -46,15 +46,7 @@ public class Vitals {
     public void setBodyTempF(double bodyTempF) {
         this.bodyTempF = bodyTempF;
     }
-/**********************Commented out get & set BMI due to BMI being calculated in its own method
-//    public double getBmi() {
-//        return bmi;
-//    }
-//
-//    public void setBmi(double bmi) {
-//        this.bmi = bmi;
-//    }
-*/
+
 
     public double getWeightLB() {
         return weightLB;
