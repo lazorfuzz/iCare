@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import { withStyles } from '@material-ui/core/styles';
 import CompareChart from './CompareChart';
 import Text, {Title} from '../Text';
+import { calculatePercentile } from './util';
 
 class Reports extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ class Reports extends Component {
 
     };
 
-
+    console.log(calculatePercentile(100, 150, 25));
 
   }
 

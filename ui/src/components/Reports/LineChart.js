@@ -1,21 +1,23 @@
 import React, {Component} from 'react';
 import {Line} from 'react-chartjs-2';
 import styled from 'styled-components';
+import { withTheme } from '@material-ui/core/styles';
+import { generateChartData } from './util';
 
 class LineChart extends Component{
-
-  constructor(props){
-    super(props);
-
-  }
-
-
   render() {
-    const {data, options} = this.props;
-
+    const {data, options, theme} = this.props;
+    const accentColor = theme.palette.primary;
+    const styles = {
+      backgroundColor: accentColor.main,
+      borderColor: accentColor.light,
+      borderWidth: 1,
+      hoverBackgroundColor: accentColor.dark,
+      hoverBorderColor: accentColor.main,
+    }
     return (
       <Wrapper>
-        <HorizontalBar data={data} height={400} width={800} options={options} />
+        <Line data={generateChartData(data.title, data.labels, data.values, styles)} height={400} width={800} options={options} />
       </Wrapper>
     );
   }
@@ -28,7 +30,7 @@ const Wrapper = styled.div`
   padding-top: 16px;
 `;
 
-export default CompareChart;
+export default withTheme()(LineChart);
 
 
 

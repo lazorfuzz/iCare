@@ -37,14 +37,14 @@ public class LoginController {
         }
     }
     
-    // {"username": "adam", ...}
     public Boolean createUser(String user) {
         try (NitriteCollection collection = db.getCollection("users")) {
             Document doc = gson.fromJson(user, Document.class);
             String email = doc.get("email", String.class);
             Document existing = collection.find(eq("email", email)).firstOrDefault();
-            if (existing != null || doc.get("username",String.class).length() < 2 || doc.get("password",String.class).length() < 8) {
-            } else {
+            if (existing != null ||
+                    doc.get("username",String.class).length() < 2 ||
+                    doc.get("password",String.class).length() < 8) {
                 return false;
             }
             collection.insert(doc);
@@ -60,12 +60,9 @@ public class LoginController {
     public Boolean deleteUser(String email) {
         try (NitriteCollection collection = db.getCollection("users")) {
             Document doc = collection.find(eq("email", email)).firstOrDefault();
-            if (doc != null) {
-                collection.remove(doc);
-                db.commit();
-                return true;
-            }
-            return false;
+            collection.remove(doc);
+            db.commit();
+            return true;
         }
         catch (Exception e) {
             Logger.log(e.toString());

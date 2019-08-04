@@ -111,8 +111,6 @@ public class Vitals {
     public void setEmail(String email) {
         this.email = email;
     }
-    
-    
 
     public double calculateBMI(double heightFT, double weightLB){//added by WS
         int heightIN = (int) (heightFT * 12);//added by WS

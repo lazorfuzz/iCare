@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {HorizontalBar} from 'react-chartjs-2';
 import styled from 'styled-components';
-import generateChartData from './util';
+import { withTheme } from '@material-ui/core/styles';
+import { generateChartData } from './util';
 
 class CompareChart extends Component{
 
@@ -12,17 +13,23 @@ class CompareChart extends Component{
 
 
   render() {
-    const {data, options} = this.props;
+    const {data, options, theme} = this.props;
+    const accentColor = theme.palette.primary;
     const styles = {
-      backgroundColor: 'rgba(255,99,132,0.2)',
-      borderColor: 'rgba(255,99,132,1)',
+      backgroundColor: accentColor.main,
+      borderColor: accentColor.light,
       borderWidth: 1,
-      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-      hoverBorderColor: 'rgba(255,99,132,1)',
+      hoverBackgroundColor: accentColor.dark,
+      hoverBorderColor: accentColor.main,
     }
     return (
       <Wrapper>
-        <HorizontalBar data={generateChartData(data.title, data.labels, data.values, styles)} height={400} width={800} options={options} />
+        <HorizontalBar
+          data={generateChartData(data.title, data.labels, data.values, styles)}
+          height={250}
+          width={800}
+          options={options}
+        />
       </Wrapper>
     );
   }
@@ -35,4 +42,4 @@ const Wrapper = styled.div`
   padding-top: 16px;
 `;
 
-export default CompareChart;
+export default withTheme(CompareChart);

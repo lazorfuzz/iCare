@@ -41,22 +41,17 @@ public class PatientController {
     public Boolean setUserVitals(String vitals) {
         try (NitriteCollection collection = db.getCollection("vitals")) {
             Vitals v = gson.fromJson(vitals, Vitals.class);
-            System.out.println("BMI: "+v.calculateBMI(5.9, 150));
-            String jsonv = gson.toJson(v);
-            System.out.println("Set User Vitals:\n "+jsonv);
+            v.calculateBMI(v.getHeightFT(), v.getWeightLB());
+            String jsonV = gson.toJson(v);
             Document d = collection.find(eq("email", v.getEmail())).firstOrDefault();
-            
-            if (d != null) {
-                collection.remove(d);
-            }
-            MapperFacade fac = new JacksonFacade();
-            Document doc = fac.parse(vitals);
-            collection.insert(doc);
+            Document doc = gson.fromJson(jsonV, Document.class);
+            collection.update(eq("email", v.getEmail()), doc);
             this.db.commit();
             return true;
         }
         catch (Exception e) {
             Logger.log(e.toString());
+            System.out.println(e);
             return false;
         }
     }
