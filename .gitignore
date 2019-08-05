@@ -5,6 +5,6 @@ node_modules
 *.jar
 *.class
 *.lst
-
+apidocs
 
 /nbproject/

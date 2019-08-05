@@ -27,11 +27,14 @@ class Browser extends Region {
     final WebEngine webEngine = browser.getEngine();
     LoginController loginController = new LoginController();
     PatientController patientController = new PatientController();
+    NotificationsController notificationsController = new NotificationsController();
+    PrinterController printerController = new PrinterController(webEngine);
      
     public Browser(Nitrite db) {
         getStyleClass().add("browser");
         loginController.setDb(db);
         patientController.setDb(db);
+        notificationsController.setDb(db);
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {
                 @Override
@@ -41,6 +44,8 @@ class Browser extends Region {
                     // Let our React app access the controllers
                     window.setMember("LoginController", loginController);
                     window.setMember("PatientController", patientController);
+                    window.setMember("NotificationsController", notificationsController);
+                    window.setMember("PrinterController", printerController);
                 }
             }
         );

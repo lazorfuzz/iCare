@@ -1,5 +1,24 @@
-Leon Li
-M03-A04 Implemented Design Patterns
-Object oriented design pattern: I used the singleton pattern to log errors. The class is in Logger.java.
-UI design pattern: I used the fill-in-the-blanks and input prompt patterns. This was implemented in ui/src/components/Vitals/index.js
+M04-A03 Two Implemented Use Cases with Clean, Refactored Code
 
+We implemented our refactoring plan by generating javadocs, commenting code, and creating unit tests.
+
+The documentation can be generated within NetBeans. Once generated it can be found in target/site/apidocs.
+
+Classes affected:
+Notifications.java - Leon & William
+PatientController.java - Leon & Adam
+Vitals.java - Adam
+PrinterController.java - Leon
+Test Packages - Adam
+
+New use cases:
+- We implemented patient notifications, found in the Main page.
+- We implemented patient reports, found in the Reports page. 
+- We added the ability to export reports via print.
+
+To test the use cases, log in with the following credentials:
+username: student@psu.edu
+password: ist412
+
+
+Note: Stephen did not contribute anything to the deliverable this week.

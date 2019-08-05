@@ -5,13 +5,6 @@ import { withTheme } from '@material-ui/core/styles';
 import { generateChartData } from './util';
 
 class CompareChart extends Component{
-
-  constructor(props){
-    super(props);
-
-  }
-
-
   render() {
     const {data, options, theme} = this.props;
     const accentColor = theme.palette.primary;
@@ -26,7 +19,7 @@ class CompareChart extends Component{
       <Wrapper>
         <HorizontalBar
           data={generateChartData(data.title, data.labels, data.values, styles)}
-          height={250}
+          height={200}
           width={800}
           options={options}
         />

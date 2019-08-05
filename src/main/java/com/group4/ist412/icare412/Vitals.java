@@ -13,25 +13,25 @@ import java.util.HashMap;
  */
 public class Vitals {
     
-    private double bodyTempF, bmi, weightLB, heightFT, bpSystolic, bpDiastolic, respRate, pulseBPM;  
+    private double bodyTemp, bmi, weight, height, bpSystolic, bpDiastolic, respRate, pulseBPM;  
     private String email;
     /**
      * This is the constructor for the vitals class
      * @param email The patient's email
-     * @param bodyTempF The patient's body temperature in Fahrenheit.
-     * @param weightLB The patient's weight in pounds.
-     * @param heightFT The patient's height in feet.
+     * @param bodyTemp The patient's body temperature in Fahrenheit
+     * @param weight The patient's weight in kilograms.
+     * @param height The patient's height in centimeters.
      * @param bpSystolic This is the systolic(top) blood pressure number.
      * @param bpDiastolic This sis the diastolic(bottom) blood pressure number.
      * @param respRate This is the patient's respiration rate (breaths per minute).
      * @param pulseBPM This is the patient's pulse (beats per minute).
      */
-    public Vitals(String email, double bodyTempF,double weightLB, double heightFT, double bpSystolic, double bpDiastolic, double respRate, double pulseBPM) {
+    public Vitals(String email, double bodyTemp,double weight, double height, double bpSystolic, double bpDiastolic, double respRate, double pulseBPM) {
         
         this.email = email;
-        this.bodyTempF = bodyTempF;
-        this.weightLB = weightLB;
-        this.heightFT = heightFT;
+        this.bodyTemp = bodyTemp;
+        this.weight = weight;
+        this.height = height;
         //Removed BMI from constructor due to it being calculated in it's own method using height & weight
         this.bpSystolic = bpSystolic;//added by WS
         this.bpDiastolic = bpDiastolic;//added by WS
@@ -39,29 +39,29 @@ public class Vitals {
         this.pulseBPM = pulseBPM;//added by WS
     }
 
-    public double getBodyTempF() {
-        return bodyTempF;
+    public double getBodyTemp() {
+        return bodyTemp;
     }
 
-    public void setBodyTempF(double bodyTempF) {
-        this.bodyTempF = bodyTempF;
+    public void setBodyTemp(double bodyTemp) {
+        this.bodyTemp = bodyTemp;
     }
 
 
-    public double getWeightLB() {
-        return weightLB;
+    public double getWeight() {
+        return weight;
     }
 
-    public void setWeightLB(double weightLB) {
-        this.weightLB = weightLB;
+    public void setWeight(double weightLB) {
+        this.weight = weightLB;
     }
 
-    public double getHeightFT() {
-        return heightFT;
+    public double getHeight() {
+        return height;
     }
 
-    public void setHeightFT(double heightFT) {
-        this.heightFT = heightFT;
+    public void setHeight(double height) {
+        this.height = height;
     }
 
     public double getBpSystolic() {
@@ -103,13 +103,5 @@ public class Vitals {
     public void setEmail(String email) {
         this.email = email;
     }
-
-    public double calculateBMI(double heightFT, double weightLB){//added by WS
-        int heightIN = (int) (heightFT * 12);//added by WS
-        this.bmi = (weightLB/(Math.pow(heightIN, 2)))*703;//added by WS
-        return this.bmi;//added by WS
-    }
-
-    
-   
+ 
 }

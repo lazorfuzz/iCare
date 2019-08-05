@@ -10,8 +10,14 @@ const Title = styled.h3`
 
 const Text = styled.p`
   font-size: 16px;
+  color: white;
+`;
+
+const AlertText = styled.p`
+  font-size: 16px;
+  color: #f55656;
 `;
 
 export default Text;
 
-export { Title };
+export { Title, AlertText };

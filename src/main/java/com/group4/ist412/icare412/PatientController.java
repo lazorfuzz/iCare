@@ -21,16 +21,23 @@ public class PatientController {
     Gson gson;
     Nitrite db;
     
+    /**
+     *
+     */
     public PatientController() {
         gson = new Gson();
     }
 
+    /**
+     *
+     * @param email The user's email
+     * @return JSON string containing user vitals
+     */
     public String getUserVitals(String email) {
         try (NitriteCollection collection = db.getCollection("vitals")) {
-            Document d = collection.find(eq("email", email)).firstOrDefault();
-            String v = gson.toJson(d);
-            //Vitals vitals = gson.fromJson(v, Vitals.class);
-            return v;
+            Document doc = collection.find(eq("email", email)).firstOrDefault();
+            String vitals = gson.toJson(doc);
+            return vitals;
         }
         catch (Exception e) {
             Logger.log(e.toString());
@@ -38,14 +45,22 @@ public class PatientController {
         }
     }
     
+    /**
+     *
+     * @param vitals JSON string containing new vitals
+     * @return Boolean
+     */
     public Boolean setUserVitals(String vitals) {
         try (NitriteCollection collection = db.getCollection("vitals")) {
-            Vitals v = gson.fromJson(vitals, Vitals.class);
-            v.calculateBMI(v.getHeightFT(), v.getWeightLB());
-            String jsonV = gson.toJson(v);
-            Document d = collection.find(eq("email", v.getEmail())).firstOrDefault();
-            Document doc = gson.fromJson(jsonV, Document.class);
-            collection.update(eq("email", v.getEmail()), doc);
+            MapperFacade fac = new JacksonFacade();
+            Document doc = fac.parse(vitals);
+            Document existingDoc = collection.find(eq("email", doc.get("email", String.class))).firstOrDefault();
+            if (existingDoc != null) {
+                collection.update(eq("email", doc.get("email", String.class)), doc);
+            }
+            else {
+                collection.insert(doc);
+            }
             this.db.commit();
             return true;
         }
@@ -56,6 +71,10 @@ public class PatientController {
         }
     }
     
+    /**
+     *
+     * @param db
+     */
     public void setDb(Nitrite db) {
         this.db = db;
     }

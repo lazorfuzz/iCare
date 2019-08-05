@@ -42,10 +42,10 @@ public class VitalsIT {
      */
     @Test
     public void testGetBodyTempF() {
-        System.out.println("getBodyTempF");
+        System.out.println("getBodyTemp");
         Vitals instance = null;
         double expResult = 0.0;
-        double result = instance.getBodyTempF();
+        double result = instance.getBodyTemp();
         assertEquals(expResult, result, 0.0);
       
     }
@@ -58,7 +58,7 @@ public class VitalsIT {
         System.out.println("setBodyTempF");
         double bodyTempF = 0.0;
         Vitals instance = null;
-        instance.setBodyTempF(bodyTempF);
+        instance.setBodyTemp(bodyTempF);
        
     }
 
@@ -70,7 +70,7 @@ public class VitalsIT {
         System.out.println("getWeightLB");
         Vitals instance = null;
         double expResult = 0.0;
-        double result = instance.getWeightLB();
+        double result = instance.getWeight();
         assertEquals(expResult, result, 0.0);
        
     }
@@ -79,11 +79,11 @@ public class VitalsIT {
      * Test of setWeightLB method, of class Vitals.
      */
     @Test
-    public void testSetWeightLB() {
-        System.out.println("setWeightLB");
-        double weightLB = 0.0;
+    public void testSetWeight() {
+        System.out.println("setWeight");
+        double weight = 0.0;
         Vitals instance = null;
-        instance.setWeightLB(weightLB);
+        instance.setWeight(weight);
        
     }
 
@@ -92,10 +92,10 @@ public class VitalsIT {
      */
     @Test
     public void testGetHeightFT() {
-        System.out.println("getHeightFT");
+        System.out.println("getHeight");
         Vitals instance = null;
         double expResult = 0.0;
-        double result = instance.getHeightFT();
+        double result = instance.getHeight();
         assertEquals(expResult, result, 0.0);
      
     }
@@ -105,10 +105,10 @@ public class VitalsIT {
      */
     @Test
     public void testSetHeightFT() {
-        System.out.println("setHeightFT");
-        double heightFT = 0.0;
+        System.out.println("setHeight");
+        double height = 0.0;
         Vitals instance = null;
-        instance.setHeightFT(heightFT);
+        instance.setHeight(height);
         
     }
 
@@ -234,21 +234,6 @@ public class VitalsIT {
         String email = "";
         Vitals instance = null;
         instance.setEmail(email);
-    }
-
-    /**
-     * Test of calculateBMI method, of class Vitals.
-     */
-    @Test
-    public void testCalculateBMI() {
-        System.out.println("calculateBMI");
-        double heightFT = 0.0;
-        double weightLB = 0.0;
-        Vitals instance = null;
-        double expResult = 0.0;
-        double result = instance.calculateBMI(heightFT, weightLB);
-        assertEquals(expResult, result, 0.0);
-       
     }
     
 }

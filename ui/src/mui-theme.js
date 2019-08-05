@@ -22,7 +22,7 @@ const muiTheme = createMuiTheme({
     },
     MuiPaper: {
       root: {
-        background: 'rgb(57, 65, 70)',
+        background: 'rgb(57,65,70)',
       }
     },
     MuiSnackbar: {

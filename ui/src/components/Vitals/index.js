@@ -19,12 +19,19 @@ class Vitals extends Component {
   }
 
   componentDidMount() {
-    const vitalsString = window.PatientController.getUserVitals(this.props.user.email);
-    if (vitalsString) {
-      const vitals = JSON.parse(vitalsString);
-      if (vitals) {
-        const { weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM } = vitals;
-        this.setState({ weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM });
+    if (this.props.vitals.hasOwnProperty('email')) {
+      const { weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM } = this.props.vitals;
+      this.setState({ weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM });
+    }
+    if (window.PatientController && !this.props.vitals.hasOwnProperty('email')) {
+      const vitalsString = window.PatientController.getUserVitals(this.props.user.email);
+      if (vitalsString) {
+        const vitals = JSON.parse(vitalsString);
+        if (vitals) {
+          const { weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM } = vitals;
+          this.setState({ weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM });
+          this.props.onVitalsUpdate({ weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM });
+        }
       }
     }
   }
@@ -34,6 +41,7 @@ class Vitals extends Component {
     const { weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM } = this.state;
     window.PatientController.setUserVitals(JSON.stringify({ email, weight, bodyTemp, height, bpSystolic, bpDiastolic, respRate, pulseBPM }));
     this.props.onNotification('Your vitals were submitted!', 'message');
+    this.props.onVitalsUpdate();
   }
 
   render() {
@@ -44,7 +52,7 @@ class Vitals extends Component {
         <Fields>
           <TextField
             label="Weight"
-            helperText="(pounds)"
+            helperText="(kilograms)"
             required
             classes={{ root: classes.vitalsInput }}
             inputProps={{ type: 'number' }}
@@ -53,7 +61,7 @@ class Vitals extends Component {
           />
           <TextField
             label="Height"
-            helperText="(inches)"
+            helperText="(centimeters)"
             classes={{ root: classes.vitalsInput }}
             inputProps={{ type: 'number' }}
             value={height}

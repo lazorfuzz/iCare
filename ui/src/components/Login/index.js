@@ -83,6 +83,7 @@ class Login extends Component {
                 <BaseInput
                   className="loginInput"
                   type="email"
+                  required
                   maxLength={80}
                   placeholder="Email"
                   value={username}
@@ -94,6 +95,7 @@ class Login extends Component {
                 <BaseInput
                   className="loginInput"
                   type="password"
+                  required
                   maxLength={80}
                   placeholder="Password"
                   value={password}
@@ -156,7 +158,7 @@ const SplashTitle = styled.h3`
   margin: .5em 0;
 `;
 
-const LoginContainer = styled.div`
+const LoginContainer = styled.form`
   margin: 16px;
   margin-top: 24px;
 `;

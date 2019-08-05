@@ -10,7 +10,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      path: 'home',
+      path: 'login',
       showSnack: false,
       snackData: { message: 'Login failed.', type: 'error' },
       user: { firstName: 'Student', lastName: 'Jackson', email: 'student@psu.edu', role: 'patient' }
@@ -19,7 +19,7 @@ class App extends Component {
 
   handleSnackbarClose = () => this.setState({ showSnack: false });
 
-  handleShowSnack = (message, type) => {
+  handleShowSnack = (message, type = 'regular') => {
     this.setState({
       showSnack: true,
       snackData: { message, type }
@@ -50,7 +50,8 @@ class App extends Component {
         </Wrapper>
         <Snackbar
           className="snack"
-          classes={{ anchorOriginBottomCenter: classes.snackbar }}
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          classes={{ anchorOriginBottomRight: classes.snackbar }}
           open={showSnack}
           autoHideDuration={5000}
           onClose={this.handleSnackbarClose}

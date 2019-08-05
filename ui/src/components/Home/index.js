@@ -11,21 +11,45 @@ import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import Vitals from '../Vitals';
 import Reports from '../Reports';
+import Main from '../Main';
 
 
 class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      page: '#reports',
+      page: '#main',
+      vitals: {}
     };
+  }
+
+  componentDidMount() {
+    if (window.PatientController) {
+      const vitalsString = window.PatientController.getUserVitals(this.props.user.email);
+      if (vitalsString) {
+        const vitals = JSON.parse(vitalsString);
+        if (vitals) {
+          this.setState({ vitals });
+        }
+      }
+    }
   }
 
   handleSetPage = (page) => this.setState({ page });
 
+  handleVitalsChange = () => {
+    const vitalsString = window.PatientController.getUserVitals(this.props.user.email);
+    if (vitalsString) {
+      const vitals = JSON.parse(vitalsString);
+      if (vitals) {
+        this.setState({ vitals });
+      }
+    }
+  }
+
   render() {
     const { classes, user } = this.props;
-    const { page } = this.state;
+    const { page, vitals } = this.state;
     return (
       <Wrapper>
         <NavigationBar>
@@ -88,10 +112,13 @@ class Home extends Component {
         </NavigationBar>
         <PageContainer>
           {
-            page === '#vitals' && <Vitals user={this.props.user} onNotification={this.props.onNotification} />
+            page === '#main' && <Main user={this.props.user} vitals={vitals} onNotification={this.props.onNotification} />
           }
           {
-            page === '#reports' && <Reports user={this.props.user} onNotification={this.props.onNotification} />
+            page === '#vitals' && <Vitals user={this.props.user} vitals={vitals} onVitalsUpdate={this.handleVitalsChange} onNotification={this.props.onNotification} />
+          }
+          {
+            page === '#reports' && <Reports user={this.props.user} vitals={vitals} onNotification={this.props.onNotification} />
           }
         </PageContainer>
       </Wrapper>
@@ -132,7 +159,7 @@ const NavigationBar = styled.div`
 
 const PageContainer = styled.div`
   margin-left: 80px;
-  width: calc(100% - 80px);
+  width: calc(100vw - 80px);
 `;
 
 export default withStyles(styles)(Home);
