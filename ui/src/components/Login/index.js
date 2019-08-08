@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import EmailIcon from '@material-ui/icons/Email';
+import PersonIcon from '@material-ui/icons/Person';
 import VPNKeyIcon from '@material-ui/icons/VpnKey';
 import Button from '@material-ui/core/Button';
 import styled from 'styled-components';
@@ -16,8 +17,10 @@ class Login extends Component {
     this.state = {
       email: '',
       password: '',
+      firstName: '',
+      lastName: '',
       creatingAccount: false,
-      showLogo: true
+      showLogo: true,
     };
   }
 
@@ -25,8 +28,9 @@ class Login extends Component {
     setTimeout(() => this.setState({ showLogo: false }), 2900);
   }
 
-  handleLogin = () => {
+  handleLogin = (evt) => {
     const { email, password } = this.state;
+    evt.preventDefault();
     const loggedIn = window.LoginController.authenticate(email, password);
     this.props.onNotification(loggedIn ? 'Logged in!' : 'Login failed!', loggedIn ? 'message' : 'error');
     if (loggedIn) {
@@ -34,8 +38,20 @@ class Login extends Component {
     }
   }
 
+  handleCreateAccount = (evt) => {
+    const { firstName, lastName, email, password } = this.state;
+    evt.preventDefault();
+    const user =  { firstName, lastName, email, password, role: 'patient' };
+    const createdAccount = window.LoginController.createUser(JSON.stringify(user));
+  }
+
+  handleToggleLogin = () => {
+    const { creatingAccount } = this.state;
+    this.setState({ creatingAccount: !creatingAccount });
+  }
+
   render() {
-    const { username, password, creatingAccount, showLogo } = this.state;
+    const { username, password, firstName, lastName, creatingAccount, showLogo } = this.state;
     const { classes } = this.props;
 
     return (
@@ -78,6 +94,36 @@ class Login extends Component {
         >
           <Card>
             <LoginContainer>
+            {
+                creatingAccount && (
+                  <React.Fragment>
+                    <InputContainer>
+                      <PersonIcon className="loginIcon" />
+                      <BaseInput
+                        className="loginInput"
+                        type="text"
+                        required
+                        maxLength={80}
+                        placeholder="First Name"
+                        value={firstName}
+                        onChange={(evt) => this.setState({ firstName: evt.target.value })}
+                      />
+                    </InputContainer>
+                    <InputContainer>
+                      <PersonIcon className="loginIcon" />
+                      <BaseInput
+                        className="loginInput"
+                        type="text"
+                        required
+                        maxLength={80}
+                        placeholder="Last Name"
+                        value={lastName}
+                        onChange={(evt) => this.setState({ lastName: evt.target.value })}
+                      />
+                    </InputContainer>
+                  </React.Fragment>
+                )
+              }
               <InputContainer>
                 <EmailIcon className="loginIcon" />
                 <BaseInput
@@ -97,6 +143,7 @@ class Login extends Component {
                   type="password"
                   required
                   maxLength={80}
+                  minLength={8}
                   placeholder="Password"
                   value={password}
                   onChange={(evt) => this.setState({ password: evt.target.value })}
@@ -110,11 +157,21 @@ class Login extends Component {
                   classes={{ root: classes.loginButton }}
                   color="primary"
                   variant="contained"
-                  onClick={this.handleLogin}
+                  type="submit"
+                  onClick={creatingAccount ? this.handleCreateAccount : this.handleLogin}
                 >
-                  Login
+                  {
+                    creatingAccount ? 'Sign Up' : 'Login'
+                  }
                 </Button>
-                <Button color="default">Create Account</Button>
+                <Button
+                  color="default"
+                  onClick={this.handleToggleLogin}
+                >
+                  {
+                    creatingAccount ? 'Login' : 'Create Account'
+                  }
+                </Button>
               </Options>
             </LoginContainer>
           </Card>

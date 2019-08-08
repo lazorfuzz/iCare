@@ -56,7 +56,9 @@ class Main extends Component {
           alerts.length === 0 ? (
             <Card>
             <CardBody>
-              You have no health notifications.
+              {
+                this.props.user.role === 'patient' ? 'You have no health notifications.' : 'You have notifications.'
+              }
             </CardBody>
           </Card>
           ) : this.generateAlerts()

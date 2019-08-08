@@ -58,6 +58,12 @@ public class MainApp extends Application {
         Gson gson = new Gson();
         User u1 = new User("Leon", "Li", "test", "leon@email.net", "doctor");
         User u2 = new User("Student", "Jackson", "ist412", "student@psu.edu", "patient");
+        User u3 = new User("Nurse", "Ratched", "cuckoo", "nurse@hospital.com", "nurse");
+        User p1 = new User("Tim", "Legler", "test", "timlegler@gmail.com", "patient");
+        User p2 = new User("Luke", "Kerbs", "test", "lukerbs@gmail.com", "patient");
+        User p3 = new User("Jay", "Kerbs", "test", "jaykerbs@gmail.com", "patient");
+        User p4 = new User("Josh", "Richardson", "test", "jrichardson@gmail.com", "patient");
+        User p5 = new User("Daniel", "Fishman", "test", "dfishman@gmail.com", "patient");
         try (NitriteCollection collection = db.getCollection("users")) {
             if (!collection.hasIndex("email")) {
                 collection.createIndex("email", indexOptions(IndexType.Unique, true));
@@ -65,8 +71,20 @@ public class MainApp extends Application {
             MapperFacade fac = new JacksonFacade();
             Document doc = fac.parse(gson.toJson(u1));
             Document doc2 = fac.parse(gson.toJson(u2));
+            Document doc3 = fac.parse(gson.toJson(u3));
+            Document doc4 = fac.parse(gson.toJson(p1));
+            Document doc5 = fac.parse(gson.toJson(p2));
+            Document doc6 = fac.parse(gson.toJson(p3));
+            Document doc7 = fac.parse(gson.toJson(p4));
+            Document doc8 = fac.parse(gson.toJson(p5));
             collection.insert(doc);
             collection.insert(doc2);
+            collection.insert(doc3);
+            collection.insert(doc4);
+            collection.insert(doc5);
+            collection.insert(doc6);
+            collection.insert(doc7);
+            collection.insert(doc8);
             this.db.commit();
         }
         catch (Exception e) {

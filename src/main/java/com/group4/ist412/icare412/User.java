@@ -6,6 +6,7 @@
 package com.group4.ist412.icare412;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  *
@@ -18,6 +19,7 @@ public class User implements Serializable {
     private String password;
     private String email;
     private String role;
+    private UUID id;
 
     public User(String firstName, String lastName, String password, String email, String role) {
         this.firstName = firstName;
@@ -25,6 +27,7 @@ public class User implements Serializable {
         this.password = password;
         this.email = email;
         this.role = role;
+        this.id = UUID.randomUUID();
     }
 
     public String getFirstName() {

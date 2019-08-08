@@ -42,9 +42,7 @@ public class LoginController {
             Document doc = gson.fromJson(user, Document.class);
             String email = doc.get("email", String.class);
             Document existing = collection.find(eq("email", email)).firstOrDefault();
-            if (existing != null ||
-                    doc.get("username",String.class).length() < 2 ||
-                    doc.get("password",String.class).length() < 8) {
+            if (existing != null) {
                 return false;
             }
             collection.insert(doc);

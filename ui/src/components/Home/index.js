@@ -12,7 +12,7 @@ import styled from 'styled-components';
 import Vitals from '../Vitals';
 import Reports from '../Reports';
 import Main from '../Main';
-
+import Patients from '../Patients';
 
 class Home extends Component {
   constructor(props) {
@@ -82,24 +82,26 @@ class Home extends Component {
               </Tooltip>
             </React.Fragment>
           }
-          <Tooltip title="Reports" placement="right">
-            <IconButton
-              classes={{ root: page === '#reports' ? classes.selectedNavButton : classes.navButton }}
-              onClick={() => this.handleSetPage('#reports')}
-            >
-              <ReportsIcon />
-            </IconButton>
-          </Tooltip>
           {
             user.role === 'patient' &&
-            <Tooltip title="Vitals" placement="right">
-              <IconButton
-                classes={{ root: page === '#vitals' ? classes.selectedNavButton : classes.navButton }}
-                onClick={() => this.handleSetPage('#vitals')}
-              >
-                <VitalsIcon />
-              </IconButton>
-            </Tooltip>
+            <React.Fragment>
+              <Tooltip title="Reports" placement="right">
+                <IconButton
+                  classes={{ root: page === '#reports' ? classes.selectedNavButton : classes.navButton }}
+                  onClick={() => this.handleSetPage('#reports')}
+                >
+                  <ReportsIcon />
+                </IconButton>
+              </Tooltip>
+              <Tooltip title="Vitals" placement="right">
+                <IconButton
+                  classes={{ root: page === '#vitals' ? classes.selectedNavButton : classes.navButton }}
+                  onClick={() => this.handleSetPage('#vitals')}
+                >
+                  <VitalsIcon />
+                </IconButton>
+              </Tooltip>
+            </React.Fragment>
           }
           <Tooltip title="Settings" placement="right">
             <IconButton
@@ -119,6 +121,9 @@ class Home extends Component {
           }
           {
             page === '#reports' && <Reports user={this.props.user} vitals={vitals} onNotification={this.props.onNotification} />
+          }
+          {
+            page === '#patients' && <Patients user={this.props.user} onNotification={this.props.onNotification}  />
           }
         </PageContainer>
       </Wrapper>
