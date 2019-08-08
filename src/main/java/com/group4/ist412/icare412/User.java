@@ -19,15 +19,15 @@ public class User implements Serializable {
     private String password;
     private String email;
     private String role;
-    private UUID id;
+    private String id;
 
-    public User(String firstName, String lastName, String password, String email, String role) {
+    public User(String firstName, String lastName, String password, String email, String role, String id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.role = role;
-        this.id = UUID.randomUUID();
+        this.id = id;
     }
 
     public String getFirstName() {

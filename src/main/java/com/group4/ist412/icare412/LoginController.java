@@ -12,6 +12,8 @@ import org.dizitart.no2.Nitrite;
 import org.dizitart.no2.NitriteCollection;
 import org.dizitart.no2.Cursor;
 import static org.dizitart.no2.filters.Filters.eq;
+import org.dizitart.no2.mapper.JacksonFacade;
+import org.dizitart.no2.mapper.MapperFacade;
 
 /**
  *
@@ -39,7 +41,8 @@ public class LoginController {
     
     public Boolean createUser(String user) {
         try (NitriteCollection collection = db.getCollection("users")) {
-            Document doc = gson.fromJson(user, Document.class);
+            MapperFacade fac = new JacksonFacade();
+            Document doc = fac.parse(user);
             String email = doc.get("email", String.class);
             Document existing = collection.find(eq("email", email)).firstOrDefault();
             if (existing != null) {

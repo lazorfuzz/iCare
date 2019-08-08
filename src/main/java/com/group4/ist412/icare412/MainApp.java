@@ -56,14 +56,14 @@ public class MainApp extends Application {
         .filePath("icare.db")
         .openOrCreate();
         Gson gson = new Gson();
-        User u1 = new User("Leon", "Li", "test", "leon@email.net", "doctor");
-        User u2 = new User("Student", "Jackson", "ist412", "student@psu.edu", "patient");
-        User u3 = new User("Nurse", "Ratched", "cuckoo", "nurse@hospital.com", "nurse");
-        User p1 = new User("Tim", "Legler", "test", "timlegler@gmail.com", "patient");
-        User p2 = new User("Luke", "Kerbs", "test", "lukerbs@gmail.com", "patient");
-        User p3 = new User("Jay", "Kerbs", "test", "jaykerbs@gmail.com", "patient");
-        User p4 = new User("Josh", "Richardson", "test", "jrichardson@gmail.com", "patient");
-        User p5 = new User("Daniel", "Fishman", "test", "dfishman@gmail.com", "patient");
+        User u1 = new User("Leon", "Li", "test", "leon@email.net", "doctor", "g5g3gr3gr");
+        User u2 = new User("Student", "Jackson", "ist412", "student@psu.edu", "patient", "glkj3jg");
+        User u3 = new User("Nurse", "Ratched", "cuckoo", "nurse@hospital.com", "nurse", "lgkjl5k3jg");
+        User p1 = new User("Tim", "Legler", "test", "timlegler@gmail.com", "patient", "kl4j3lkhjgh5");
+        User p2 = new User("Luke", "Kerbs", "test", "lukerbs@gmail.com", "patient", "4klgj3");
+        User p3 = new User("Jay", "Kerbs", "test", "jaykerbs@gmail.com", "patient", "g5jl3");
+        User p4 = new User("Josh", "Richardson", "test", "jrichardson@gmail.com", "patient", "gljk5g");
+        User p5 = new User("Daniel", "Fishman", "test", "dfishman@gmail.com", "patient", "g3jlkjgr");
         try (NitriteCollection collection = db.getCollection("users")) {
             if (!collection.hasIndex("email")) {
                 collection.createIndex("email", indexOptions(IndexType.Unique, true));

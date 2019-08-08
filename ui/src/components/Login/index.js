@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import uuidv4 from 'uuid/v4';
 import EmailIcon from '@material-ui/icons/Email';
 import PersonIcon from '@material-ui/icons/Person';
 import VPNKeyIcon from '@material-ui/icons/VpnKey';
@@ -30,19 +31,26 @@ class Login extends Component {
 
   handleLogin = (evt) => {
     const { email, password } = this.state;
-    evt.preventDefault();
     const loggedIn = window.LoginController.authenticate(email, password);
     this.props.onNotification(loggedIn ? 'Logged in!' : 'Login failed!', loggedIn ? 'message' : 'error');
     if (loggedIn) {
+      evt.preventDefault();
       this.props.onLoggedIn(JSON.parse(window.LoginController.getUserByEmail(email)));
     }
   }
 
   handleCreateAccount = (evt) => {
     const { firstName, lastName, email, password } = this.state;
-    evt.preventDefault();
-    const user =  { firstName, lastName, email, password, role: 'patient' };
+    const user =  { firstName, lastName, email, password, role: 'patient', id: uuidv4() };
+    if (!firstName || !lastName || !email || !password) {
+      return;
+    }
     const createdAccount = window.LoginController.createUser(JSON.stringify(user));
+    if (createdAccount) {
+      evt.preventDefault();
+      this.setState({ creatingAccount: false, password: '' });
+      this.props.onNotification('Account created!');
+    }
   }
 
   handleToggleLogin = () => {
@@ -104,6 +112,7 @@ class Login extends Component {
                         type="text"
                         required
                         maxLength={80}
+                        minLength={1}
                         placeholder="First Name"
                         value={firstName}
                         onChange={(evt) => this.setState({ firstName: evt.target.value })}
@@ -116,6 +125,7 @@ class Login extends Component {
                         type="text"
                         required
                         maxLength={80}
+                        minLength={1}
                         placeholder="Last Name"
                         value={lastName}
                         onChange={(evt) => this.setState({ lastName: evt.target.value })}
