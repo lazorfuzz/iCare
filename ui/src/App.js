@@ -33,6 +33,8 @@ class App extends Component {
     });
   }
 
+  handleLogOut = () => this.setState({ path: 'login', user: {} });
+
   render() {
     const { path, showSnack, snackData, user } = this.state;
     const { classes } = this.props;
@@ -45,7 +47,7 @@ class App extends Component {
           }
           {
             path === 'home' &&
-            <Home user={user} onNotification={this.handleShowSnack} />
+            <Home user={user} onLogOut={this.handleLogOut} onNotification={this.handleShowSnack} />
           }
         </Wrapper>
         <Snackbar

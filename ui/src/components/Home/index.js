@@ -5,7 +5,7 @@ import HomeIcon from '@material-ui/icons/Home';
 import PatientsIcon from '@material-ui/icons/SupervisorAccount';
 import VitalsIcon from '@material-ui/icons/Equalizer';
 import ReportsIcon from '@material-ui/icons/Assignment';
-import SettingsIcon from '@material-ui/icons/Settings';
+import PowerIcon from '@material-ui/icons/PowerSettingsNew';
 import MedicationsIcon from '@material-ui/icons/ListAlt';
 import { withStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
@@ -103,12 +103,12 @@ class Home extends Component {
               </Tooltip>
             </React.Fragment>
           }
-          <Tooltip title="Settings" placement="right">
+          <Tooltip title="Logout" placement="right">
             <IconButton
               classes={{ root: page === '#settings' ? classes.selectedNavButton : classes.navButton }}
-              onClick={() => this.handleSetPage('#settings')}
+              onClick={this.props.onLogOut}
             >
-              <SettingsIcon />
+              <PowerIcon />
             </IconButton>
           </Tooltip>
         </NavigationBar>

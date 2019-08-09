@@ -27,6 +27,7 @@ class Browser extends Region {
     final WebEngine webEngine = browser.getEngine();
     LoginController loginController = new LoginController();
     PatientController patientController = new PatientController();
+    DoctorController doctorController = new DoctorController();
     NotificationsController notificationsController = new NotificationsController();
     PrinterController printerController = new PrinterController(webEngine);
      
@@ -34,6 +35,7 @@ class Browser extends Region {
         getStyleClass().add("browser");
         loginController.setDb(db);
         patientController.setDb(db);
+        doctorController.setDb(db);
         notificationsController.setDb(db);
         webEngine.getLoadWorker().stateProperty().addListener(
             new ChangeListener() {
@@ -44,6 +46,7 @@ class Browser extends Region {
                     // Let our React app access the controllers
                     window.setMember("LoginController", loginController);
                     window.setMember("PatientController", patientController);
+                    window.setMember("DoctorController", doctorController);
                     window.setMember("NotificationsController", notificationsController);
                     window.setMember("PrinterController", printerController);
                 }
