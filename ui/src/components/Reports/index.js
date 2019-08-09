@@ -39,11 +39,25 @@ class Reports extends Component {
         <Title>Patient Comparison Reports</Title>
         {
           vitals.weight &&
-          <CompareChart data={{labels: ["Your Weight","Average Weight"], title: "Weight Comparison (kg)", values: [vitals.weight,"62"]}} options={options}/>
+          <CompareChart
+            data={{
+              labels: ["Your Weight","Average Weight"],
+              title: "Weight Comparison (kg)",
+              values: [vitals.weight,"62"]
+            }}
+            options={options}
+          />
         }
         {
           vitals.height &&
-          <CompareChart data={{labels: ["Your Height","Average Height"], title: "Height Comparison (cm)", values: [vitals.height,"175.4"]}} options={options}/>
+          <CompareChart
+            data={{
+              labels: ["Your Height","Average Height"],
+              title: "Height Comparison (cm)",
+              values: [vitals.height,"175.4"]
+            }}
+            options={options}
+          />
         }
         {
           !this.state.vitals && 

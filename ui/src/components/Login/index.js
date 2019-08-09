@@ -9,7 +9,6 @@ import Card from '@material-ui/core/Card';
 import { withStyles } from '@material-ui/core/styles';
 import { motion } from "framer-motion";
 import { BaseInput, InputContainer } from '../Input';
-import Text, { Title } from '../Text';
 import './Login.css';
 
 class Login extends Component {
@@ -42,9 +41,6 @@ class Login extends Component {
   handleCreateAccount = (evt) => {
     const { firstName, lastName, email, password } = this.state;
     const user =  { firstName, lastName, email, password, role: 'patient', id: uuidv4() };
-    if (!firstName || !lastName || !email || !password) {
-      return;
-    }
     const createdAccount = window.LoginController.createUser(JSON.stringify(user));
     if (createdAccount) {
       evt.preventDefault();
@@ -101,7 +97,7 @@ class Login extends Component {
           }}
         >
           <Card>
-            <LoginContainer>
+            <LoginContainer onSubmit={creatingAccount ? this.handleCreateAccount : this.handleLogin}>
             {
                 creatingAccount && (
                   <React.Fragment>
@@ -153,7 +149,7 @@ class Login extends Component {
                   type="password"
                   required
                   maxLength={80}
-                  minLength={8}
+                  minLength={creatingAccount ? 8 : 1}
                   placeholder="Password"
                   value={password}
                   onChange={(evt) => this.setState({ password: evt.target.value })}
@@ -168,7 +164,6 @@ class Login extends Component {
                   color="primary"
                   variant="contained"
                   type="submit"
-                  onClick={creatingAccount ? this.handleCreateAccount : this.handleLogin}
                 >
                   {
                     creatingAccount ? 'Sign Up' : 'Login'
