@@ -84,6 +84,22 @@ public class PatientController {
         }
     }
     
+    public String getPatientById(String id) {
+        try (NitriteCollection collection = db.getCollection("users")) {
+            Document doc = collection.find(and(eq("role", "patient"), eq("id", id))).firstOrDefault();
+            if (doc != null) {
+                return gson.toJson(doc);
+            }
+            else {
+                return "{}";
+            }
+        }
+        catch (Exception e) {
+            Logger.log(e.toString());
+            return "";
+        }
+    }
+    
     public String getPatientMedications(String patientId) {
         try (NitriteCollection collection = db.getCollection("patientMeds")) {
             List<Document> list = collection.find(eq("patientId", patientId)).toList();

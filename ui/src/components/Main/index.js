@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import Card from '@material-ui/core/Card';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import { withStyles } from '@material-ui/core/styles';
 import Text, {Title, AlertText} from '../Text';
+import request from 'request-promise';
 
 class Main extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      alerts: []
+      alerts: [],
+      news: []
     };
   }
 
   componentDidMount() {
+    const { user } = this.props;
+    request(`https://leonflix.net/api/news/${user.role === 'doctor' ? 'CDC' : 'nurse'}`)
+    .then((data) => {
+      this.setState({ news: JSON.parse(data) });
+    });
     this.updateAlerts();
   }
 
@@ -47,17 +57,48 @@ class Main extends Component {
     ));
   }
 
+  generateNews = () => {
+    const { classes } = this.props;
+    const { news } = this.state;
+    return (
+      <List classes={{ root: classes.list }}>
+        {
+          news.map((n) => (
+            <ListItem
+              key={n.link}
+              button
+              classes={{ root: classes.listItem }}
+            >
+              <ListItemContent>
+                <Text>
+                {n.title}
+                </Text>
+              </ListItemContent>
+            </ListItem>
+          ))
+        }
+      </List>
+    )
+  }
+
   render() {
-    const { alerts } = this.state;
+    const { classes } = this.props;
+    const { alerts, news } = this.state;
     return (
       <Wrapper>
         <Title>Notifications</Title>
         {
-          alerts.length === 0 ? (
+          alerts.length === 0 || news.length === 0 ? (
             <Card>
             <CardBody>
               {
-                this.props.user.role === 'patient' ? 'You have no health notifications.' : 'You have notifications.'
+                this.props.user.role === 'patient' && 'You have no health notifications.'
+              }
+              {
+                (this.props.user.role === 'doctor' || this.props.user.role === 'nurse') && news.length === 0 && 'Loading notifications...'
+              }
+              {
+                (this.props.user.role === 'doctor' || this.props.user.role === 'nurse') && this.generateNews()
               }
             </CardBody>
           </Card>
@@ -67,6 +108,21 @@ class Main extends Component {
     );
   }
 }
+
+const styles = ({
+  listItem: {
+    color: 'rgba(255, 255, 255, .5)',
+    maxWidth: 600
+  },
+  listItemButton: {
+    color: 'rgba(255, 255, 255, .5)'
+  },
+  list: {
+    overflowX: 'hidden',
+    overflowY: 'auto',
+    maxHeight: 400,
+  }
+});
 
 const Wrapper = styled.div`
   display: flex;
@@ -86,4 +142,9 @@ const Divider = styled.hr`
   margin: 8px 0;
 `;
 
-export default Main;
+const ListItemContent = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+export default withStyles(styles)(Main);

@@ -31,11 +31,15 @@ class Patients extends Component {
   }
 
   fetchPatientLists = () => {
-    const patientsData = window.DoctorController.getAssignedPatients(this.props.user.id);
-    const allPatientsData = window.PatientController.getAllPatients();
+    const patients = JSON.parse(window.DoctorController.getAssignedPatients(this.props.user.id));
+    const allPatients = JSON.parse(window.PatientController.getAllPatients());
+    const patientsNotAssignedToMe = allPatients.filter((patient) => {
+      return patients.filter(p => p.patientId === patient.id).length === 0;
+    });
     this.setState({
-      patients: JSON.parse(patientsData),
-      allPatients: JSON.parse(allPatientsData)
+      patients,
+      allPatients,
+      selectedAvailablePatient: patientsNotAssignedToMe.length ? patientsNotAssignedToMe[0].id : ''
     });
   }
 

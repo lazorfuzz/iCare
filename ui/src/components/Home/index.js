@@ -13,6 +13,7 @@ import Vitals from '../Vitals';
 import Reports from '../Reports';
 import Main from '../Main';
 import Patients from '../Patients';
+import Medications from '../Medications';
 
 class Home extends Component {
   constructor(props) {
@@ -124,6 +125,9 @@ class Home extends Component {
           }
           {
             page === '#patients' && <Patients user={this.props.user} onNotification={this.props.onNotification}  />
+          }
+          {
+            page === '#medications' && <Medications user={this.props.user} onNotification={this.props.onNotification} />
           }
         </PageContainer>
       </Wrapper>
